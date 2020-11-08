@@ -24,7 +24,7 @@ func main() {
 
 	// Get valid multipliers from program arguments (=integer values)
 	sourceMultipliers := os.Args[1:]
-	err, multipliers := getMultipliers(&sourceMultipliers)
+	err, multipliers := GetIntegersFromSlice(&sourceMultipliers)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -33,7 +33,7 @@ func main() {
 
 	// Ask questions until "q" given
 	for {
-		err, rm, rt := getRandomFromSlices(&multipliers, &targets, prevMultiplier, prevTarget)
+		err, rm, rt := GetRandomValuesFromSlices(&multipliers, &targets, prevMultiplier, prevTarget)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -44,10 +44,7 @@ func main() {
 
 		fmt.Printf("Paljonko on %d * %d\n", rm, rt)
 		// Read the answer
-		if _, err := fmt.Scanf("%s", &answer); err != nil {
-			fmt.Printf("%s\n", err)
-			return
-		}
+		fmt.Scanln(&answer)
 		// If quitting, show statistics
 		if answer == "q" {
 			fmt.Printf("Sait yhteensä %d OIKEIN ja %d VÄÄRIN\n", totalCorrect, totalWrong)
@@ -68,7 +65,7 @@ func main() {
 }
 
 // Get valid integer multipliers from the slice of stings
-func getMultipliers(source *[]string) (err error, multipliers []int) {
+func GetIntegersFromSlice(source *[]string) (err error, multipliers []int) {
 	for _, arg := range *source {
 		m, err := strconv.Atoi(arg)
 		if err == nil {
@@ -84,7 +81,7 @@ func getMultipliers(source *[]string) (err error, multipliers []int) {
 }
 
 // Return random values from given slices
-func getRandomFromSlices(multipliers, targets *[]int, skipMultiplier, skipTarget int) (err error, mul, tar int) {
+func GetRandomValuesFromSlices(multipliers, targets *[]int, skipMultiplier, skipTarget int) (err error, mul, tar int) {
 	var i = 0 // For making sure that we do not end up in never ending loop
 	// Check that we have values in both slices
 	if len(*multipliers) == 0 || len(*targets) == 0 {
