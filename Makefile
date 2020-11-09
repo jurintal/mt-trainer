@@ -4,6 +4,9 @@ build:
 run:
 	go run main.go 2 5 10
 
+test:
+	go test -v
+
 compile:
 	echo "Compiling for every OS and Platform"
 	GOOS=linux GOARCH=arm go build -o bin/main-linux-arm main.go

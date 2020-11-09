@@ -111,8 +111,8 @@ func TestGetRandomValuesFromSlices(t *testing.T) {
 			[]int{2, 5},
 			2,
 			2,
-			[]int{5},
-			[]int{5},
+			[]int{2, 5},
+			[]int{2, 5},
 			true,
 		},
 		// Impossible situation, only one possible value and those need to be skipped
@@ -129,7 +129,7 @@ func TestGetRandomValuesFromSlices(t *testing.T) {
 
 	for _, tc := range testCases {
 		_, rm, rt := GetRandomValuesFromSlices(&tc.inM, &tc.inT, tc.skipM, tc.skipT)
-		if tc.isValid && !SliceContains(&tc.outM, rm) {
+		if tc.isValid && !SliceContains(&tc.outM, rm) && (tc.skipM != rm || tc.skipT != rt) {
 			t.Errorf("GetRandomValuesFromSlices fails: Test %v, rm: %d, rt: %d", tc, rm, rt)
 		}
 	}
